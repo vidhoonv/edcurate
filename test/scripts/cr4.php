@@ -1,0 +1,114 @@
+<?php
+//session part
+session_start();
+
+
+	//forming the nameof file	
+	$fname=$_POST["slide_name"];
+	$fname="/opt/lampp/htdocs/test/presentations/".$_SESSION['pname']."/".$fname.".php";  //may need changes
+
+	
+
+	//creating and opening the file
+	
+	$fhandle=fopen($fname,'w') or die("cannot open file");
+
+	//creating the content in variables to write into file
+
+	$php_part="<?php\n\nsession_start();\n\n?>";
+
+	$head_part="<html>\n<head>\n<title>".$_POST["slide_name"]."\n</title>\n";
+
+	$next_part="<input type=\"submit\" name=\"next_slide\" value=\"Next\">";
+
+
+	$script_part="<script type=\"text/javascript\">\nfunction MM_CheckFlashVersion(reqVerStr,msg){\n  with(navigator){\n
+   		 var isIE  = (appVersion.indexOf(\"MSIE\") != -1 && userAgent.indexOf(\"Opera\") == -1);\n
+    var isWin = (appVersion.toLowerCase().indexOf(\"win\") != -1);\n
+    if (!isIE || !isWin){ \n 
+      var flashVer = -1;\n
+      if (plugins && plugins.length > 0){\n
+        var desc = plugins[\"Shockwave Flash\"] ? plugins[\"Shockwave Flash\"].description : "";\n
+        desc = plugins[\"Shockwave Flash 2.0\"] ? plugins[\"Shockwave Flash 2.0\"].description : desc;\n
+        if (desc == "") flashVer = -1;\n
+        else{\n
+          var descArr = desc.split(" ");\n
+          var tempArrMajor = descArr[2].split(".");\n
+          var verMajor = tempArrMajor[0];\n
+          var tempArrMinor = (descArr[3] != "") ? descArr[3].split(\"r\") : descArr[4].split(\"r\");\n
+          var verMinor = (tempArrMinor[1] > 0) ? tempArrMinor[1] : 0;\n
+          flashVer =  parseFloat(verMajor + "." + verMinor);\n
+        }\n
+      }\n
+      // WebTV has Flash Player 4 or lower -- too low for video\n
+      else if (userAgent.toLowerCase().indexOf(\"webtv\") != -1) flashVer = 4.0;\n
+
+      var verArr = reqVerStr.split(",");\n
+      var reqVer = parseFloat(verArr[0] + "." + verArr[2]);\n
+  
+      if (flashVer < reqVer){\n
+        if (confirm(msg))\n
+          window.location = \"http://www.macromedia.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash\";
+      }\n
+    }\n
+  } \n
+}\n
+</script>\n</head>";
+
+
+	$body1="<body onLoad=\"MM_CheckFlashVersion('7,0,0,0','Content on this page requires a newer version of Macromedia Flash Player. Do you want to download it now?');\">\n\n<form action=\"scripts/".$_POST['slide_name'].".php\">";
+ if ( isset( $_POST ) )
+		   $postArray = &$_POST ;			// 4.1.0 or later, use $_POST
+else
+   		   $postArray = &$HTTP_POST_VARS ;	// prior to 4.1.0, use HTTP_POST_VARS		
+$auto=$postArray["vid_cont"];	
+if($auto[strlen($auto)-1]=='N')$auto="true";
+		else $auto="false"; 
+
+
+	$hp= "<h2><center> " .$postArray['title_cont']. "</center></h2>";
+
+	$vd="<embed style='position:absolute;left:60;top:150' src='/opt/lampp/htdocs/test/scripts/vids". $_POST['file']. "'autostart=".$auto." hidden='false' width=350 height=350></embed>";
+
+	$cn="<div id='content' style='border:dotted; border-width:thin; border-color:#000000; height:400; width:400;position:absolute;left:500;top:150;' ><b>". $postArray['FCKeditor2']. "</b></div>";
+
+	$end="</form></body></html>";
+
+	fwrite($fhandle,$php_part.$head_part.$script_part);
+	fwrite($fhandle,$body1.$hp.$cn.$vd.$next_part);
+	fwrite($fhandle,$end);
+
+
+	fclose($fhandle);
+
+
+//database part starts
+		$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+		$sn=$_POST['slide_name'];
+		$mn=$_POST['ll'];
+		if (!$con)
+		  {
+		  die('Could not connect: ' . mysql_error());
+		  }
+		mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+		$query="INSERT INTO ".$_SESSION['pname']." VALUES('$sn',0,0,0,0,'$mn',' ')";
+		$row=mysql_query($query,$con);  
+
+		mysql_close($con);
+//db part ends	
+
+unset($_SESSION['previous']);
+?>	
+<HTML>
+<HEAD>
+<TITLE>
+	Success
+</TITLE>
+</HEAD>
+<BODY>
+		The slide was successfully created under the presentation : <?echo $_SESSION['pname']?><br /><br />
+		<form id="f1" action="http://localhost/test/scripts/options.php" method="post">
+		<input type="submit" name="ok" value="ok">		
+		</form>
+</BODY>
+</HTML>		

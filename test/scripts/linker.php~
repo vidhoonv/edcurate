@@ -1,0 +1,157 @@
+<?php
+	session_start();
+//file handiling part
+
+		$count=1;
+//database part starts
+		$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+		if (!$con)
+		  {
+		  die('Could not connect: ' . mysql_error());
+		  }
+		mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+
+		//creating necessary files for linking content slides
+		
+		$query1="SELECT sname FROM ".$_SESSION['pname']." where cd=0";
+		$result1=mysql_query($query1,$con);  
+		
+		while($row1 = mysql_fetch_array($result1))
+ 		 {
+				
+				$n="choose".$count;
+				$fname=$row1['sname'];
+				$fname="/opt/lampp/htdocs/test/presentations/".$_SESSION['pname']."/scripts/".$fname.".php";  //may need changes
+				//echo $fname."<br />";
+				//echo $n."<br />";
+				
+	
+				//creating and opening the file
+	
+				$fhandle=fopen($fname,'w') or die("cannot open file");
+
+				//creating the content in variables to write into file
+				//this path will need change in future 
+				if($_POST["$n"]=="end")
+				{
+				$content="<?php\n\nsession_start();\n\n//redirecting to next page\nheader(\"Location:http://localhost/test/scripts/endofss.php\");\n\n?>";
+				}
+				else
+				{
+				$content="<?php\n\nsession_start();\n\n//redirecting to next page\nheader(\"Location:http://localhost/test/presentations/".$_SESSION['pname']."/".$_POST["$n"].".php\");\n\n?>";
+				}
+				//writing and closing the file
+				fwrite($fhandle,$content);
+				fclose($fhandle);
+		
+				$count++;
+			
+				//updating database for the slide record in table
+
+				$qery="UPDATE ".$_SESSION['pname']." SET linked=1 where sname='".$row1['sname']."'";
+				$rust=mysql_query($qery,$con);  		
+				
+				
+		}
+		//creating necessary slides for linking decision slides
+
+		$query1="SELECT sname,de,nde FROM ".$_SESSION['pname']." where cd=1";
+		$result1=mysql_query($query1,$con); 
+		while($row1 = mysql_fetch_array($result1))
+ 		 {
+				
+				$fname=$row1['sname'];
+				$fname="/opt/lampp/htdocs/test/presentations/".$_SESSION['pname']."/scripts/".$fname.".php";  //may need changes
+				$nd=1;
+				//echo $fname."<br />";
+				//creating and opening the file
+	
+				$fhandle=fopen($fname,'w') or die("cannot open file");
+
+				//creating the content in variables to write into file
+				//this path will need change in future 
+
+				
+				
+				if($row1['de']==1)
+				{ 
+				$if_start="\n".'if($_POST[\'rb\']==';
+				$else_start="\n".'else if($_POST[\'rb\']==';
+				}
+				else if($row1['de']==2)
+				{
+				{ 
+				$if_start="\n".'if($_POST[\'cb\']==';
+				$else_start="\n".'else if($_POST[\'cb\']==';
+				}
+				}				
+				$if_end=")\n";
+				$ob="\n{\n";								
+				$cb="\n}\n";
+				$start="<?php\n\nsession_start();\n\n//redirecting to next page\n\n";
+				$end="\n\n?>";
+				$content="";
+
+				//generating content for file dynamically
+
+				$content.=$start;
+				
+				while($nd<=$row1['nde'])
+				{
+					$n="choose".$count;
+					//echo $n."<br />";
+					if($_POST["$n"]=="end")
+					{
+					$path="\nheader(\"Location:http://localhost/test/scripts/endofss.php\");";
+					}
+					else
+					{
+					$path="\nheader(\"Location:http://localhost/test/presentations/".$_SESSION['pname']."/". $_POST["$n"].".php\");";
+					}
+					if($nd==1)
+					{
+						$content.=$if_start;
+						
+					}
+					else
+					{
+						$content.=$else_start;
+						
+					}
+					
+					$content.=$nd;
+					$content.=$if_end;
+					$content.=$ob;
+					$content.=$path;
+					$content.=$cb;						
+					$count++;
+					$nd++;
+
+				}	
+				$content.=$end;
+				//writing and closing the file
+				fwrite($fhandle,$content);
+				fclose($fhandle);
+
+				$qery1="UPDATE ".$_SESSION['pname']." SET linked=1 where sname='".$row1['sname']."'";
+				$rust1=mysql_query($qery1,$con);  		
+
+		}
+			$q="UPDATE presentations set completed=1 where pname='".$_SESSION['pname']."'";
+			$r=mysql_query($q,$con);
+	
+	
+	if($_SESSION['previous']=="choose")
+		unset($_SESSION['previous']);
+	//redirecting to options.php
+	header("Location:http://localhost/test/scripts/options.php");
+?>
+<HTML>
+<HEAD>
+<TITLE>
+	Link Result
+</TITLE>
+</HEAD>
+<BODY>
+</BODY>
+</HTML>

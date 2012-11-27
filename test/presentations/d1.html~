@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>d1
+</title>
+</head>
+<body>
+
+<div id="title" style="border:dashed; border-width:thin border-color:black" >
+ <h1 align="center">
+<span id="title_content"><p>this is working</p>
+</span>
+</h1>
+</div>
+<br /><div id="outline" style="border:dashed; border-width:thin border-color:#000000" >
+ 
+<span id="outline_content"><p>wat you say?</p>
+</span>
+
+<span id="decision_content">
+
+<br />
+<input type="radio" name="rb" value="1" align="center">yes
+<br />
+
+<br />
+<input type="radio" name="rb" value="2">no
+<br />
+
+</span>
+</div>
+</body>
+</html>

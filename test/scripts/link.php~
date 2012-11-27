@@ -1,0 +1,124 @@
+<?php
+	session_start();
+echo $_SESSION['pname']."<br />" ;
+?>
+<HTML>
+<HEAD>
+<TITLE>
+Link Page
+</TITLE>
+</HEAD>
+<BODY>
+All the slides in the presentation <?echo $_SESSION['pname']?> are listed below:<br /><br />
+
+<form id="flink" action="http://localhost/test/scripts/linker.php" method="post">
+Please select the next slide for each slide to link them:<br /><br />
+
+<?
+	//database part starts
+		$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+		$count=1;
+		$count_content=0;
+		$count_decision=0;
+		if (!$con)
+		  {
+		  die('Could not connect: ' . mysql_error());
+		  }
+		mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+		$query="SELECT sname,cd FROM ".$_SESSION['pname'];
+		$result=mysql_query($query,$con);  
+		
+		while($row = mysql_fetch_array($result))
+ 		 {
+			if($row['cd']==0)
+				$count_content++;
+			else if($row['cd']==1)
+				$count_decision++;
+			else
+				echo "There is no way you reach here";
+		}
+?> 		
+		There are <?echo $count_content?> content slides...<br />
+<?		
+		$query1="SELECT sname,lname FROM ".$_SESSION['pname']." where cd=0" ;
+		$result1=mysql_query($query1,$con);  
+		while($row1 = mysql_fetch_array($result1))
+ 		 {
+			
+ 			 echo "Slide: ".$row1['sname'];
+	
+			$query2="SELECT sname FROM ".$_SESSION['pname']." inner join levels where ".$_SESSION['pname'].".lname=levels.lname and levels.lname=".$row1['lname'];
+			$result2=mysql_query($query2,$con);
+?>
+		<select name="choose<?echo $count?>">
+<?  
+		while($row2 = mysql_fetch_array($result2))
+ 		 {
+			if($row2['sname']!=$row1['sname'])
+			{
+?>
+			<option><?echo $row2['sname']?></option>	
+  		
+<?
+			}
+  		 }
+?>
+		<option>end</option>
+		</select>
+  			<br />
+			<br />
+<?
+			$count+=1;	 
+			}
+		
+?>
+		There are <?echo $count_decision?> decision slides...<br />
+<?		
+		$query1="SELECT sname,nde FROM ".$_SESSION['pname']." where cd=1";
+		$result1=mysql_query($query1,$con);  
+		while($row1 = mysql_fetch_array($result1))
+ 		 {
+			
+ 			
+	
+			
+			$nd=1;
+			while($nd<=$row1['nde'])
+			{
+			$query2="SELECT sname FROM ".$_SESSION['pname'];
+			$result2=mysql_query($query2,$con);
+			 echo "Slide: ".$row1['sname']." Choice--".$nd;
+?>
+		<select name="choose<?echo $count?>">
+<?  
+				while($row2 = mysql_fetch_array($result2))
+ 		 		{
+					if($row2['sname']!=$row1['sname'])
+					{
+?>
+					<option><?echo $row2['sname']?></option>	
+  		
+<?
+					}
+ 		 		 }
+?>
+		<option>end</option>
+		</select>
+  			<br />
+			<br />
+<?
+			$nd++;
+			$count+=1;				 
+			}
+			
+		}
+?>
+
+
+	<br />
+
+	<br />
+	<input type="submit" name="link" value="link">
+</form>	
+</BODY>
+</HTML>

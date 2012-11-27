@@ -1,0 +1,30 @@
+<?php
+
+session_start();
+	$p=$_GET['q'];
+	
+	$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+	if (!$con)
+	  {
+	  die('Could not connect: ' . mysql_error());
+	  }
+
+	mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+
+	$query="select nde from ".$_SESSION['pname']." where sname='".$p."'";
+//	echo $query;
+	$result=mysql_query($query,$con); 
+	$row=mysql_fetch_array($result);
+
+	$dsent=$row['nde']."|";
+	$q="select lname from levels where mname='".$_SESSION['mname']."'";
+//	echo $q;
+	$r=mysql_query($q,$con); 
+	
+
+	while($row1=mysql_fetch_array($r))
+	{
+		$dsent.=$row1['lname']."|";
+	}
+	echo $dsent;
+?>

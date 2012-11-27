@@ -1,0 +1,86 @@
+<HTML>
+	<HEAD>
+		<TITLE>edit template-1
+		</TITLE>
+		<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
+		<SCRIPT type="text/javascript">
+
+			function pview()
+			{
+				//document.write("preview");
+				document.f1.action="scripts/preview.php";
+				document.f1.submit();    
+				//return true;
+			}
+			
+			function cr()
+			{
+				//document.write("create");
+				document.f1.action="scripts/create.php";
+				document.f1.submit();
+				//return true;    
+			}
+		</SCRIPT>
+					
+
+	</HEAD>
+
+	<BODY>
+		<table border="3" bordercolor="black">
+			<tr height="500">
+				<td valign="top" width="800"><p>provide information here:</p>
+				 
+				   <br>
+				    The slide contains the following elements: </p>
+				  <ul>
+					<li>title text</li>
+					<li>outline text</li>
+				</ul>
+				<form name="f1" target="_blank" method="post" action="">
+				Enter the slide name:<br>
+				<input type="text" name="slide_name" value="">
+				<br>
+				<br>
+				Please provide the content for these elements here:
+				<ul>
+				Formatting options:<br><br>
+				<div id="tspot"></div><br><br><br>
+					<li>title section<br>
+						Enter the text here:<br>
+						<script type="text/javascript">
+						var oFCKeditor = new FCKeditor('FCKeditor1');
+						oFCKeditor.BasePath = "fckeditor/";
+						oFCKeditor.Height = 100;
+						oFCKeditor.Config[ 'ToolbarLocation' ] = 'Out:tspot' ;						
+						oFCKeditor.Create();
+						</script>
+					</li>
+					<br>
+					<li>outline section<br>
+						Enter the text here:<br>
+						<script type="text/javascript">
+						var oFCKeditor = new FCKeditor('FCKeditor2');
+						oFCKeditor.BasePath = "fckeditor/";
+						oFCKeditor.Height = 300;	
+						oFCKeditor.Config[ 'ToolbarLocation' ] = 'Out:tspot' ;						
+						oFCKeditor.Create();
+						</script>
+					<br>
+					</li>
+				</ul>
+				
+				<input type="submit" name="preview" value="preview"     onClick="pview()">
+
+				&nbsp&nbsp<input type="submit" name="create" value="create slide" onClick="cr()">
+					
+				</form>	
+
+			  </td>
+					
+				
+			</tr>
+		<table>
+		
+	</BODY>
+
+</HTML>

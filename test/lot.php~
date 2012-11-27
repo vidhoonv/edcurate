@@ -1,0 +1,42 @@
+<HTML>
+	<HEAD>
+		<TITLE>	this page displays the list of templates for the user to select from it
+		</TITLE>
+	</HEAD>
+
+	<BODY>
+
+		<div class="header">
+		<h1>STEP 1</h1><br>
+		just select a template from the list below
+		</div>	
+		<br>
+		<hr>	
+		<br>	
+
+		<div class="content">
+
+		<h2>template1</h2><br>
+		<a href="t1.html">
+			<img src="templates/t1.jpg" height="250" width="250"><br>
+		</a>
+
+		<h2>template2</h2><br>
+		<a href="t2.html">
+			<img src="templates/t2.jpg" height="250" width="250"><br>
+		</a>
+
+		<h2>template3</h2><br>
+		<a href="t3.html">
+			<img src="templates/t1.jpg" height="250" width="250"><br>
+		</a>
+		
+		<h2>template4</h2><br>
+		<a href="t3.html">		<!change link -- just temperory> 
+			<img src="templates/t4.jpg" height="250" width="250"><br>
+		</a>	
+
+		</div>
+	</BODY>
+
+</HTML>

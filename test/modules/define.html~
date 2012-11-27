@@ -1,0 +1,59 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			define modules
+		</TITLE>
+
+		<script type="text/javascript">
+
+			function gt()
+			{
+			//document.write("hello");
+			
+			var l=document.getElementById("level");
+			var m=document.getElementById("num");
+			var n=m.value;
+			//document.write(n);
+			for(i=1;i<=n;i++)
+			{
+			l.innerHTML+="<br>Enter name of Level-"+i+"<br><input type=\"text\" name=\"t"+i+"\"><br>"; 
+			}
+
+			var f=document.getElementById("fet");
+
+			f.style.visibility="hidden";
+
+			var s=document.getElementById("sub");
+
+			s.innerHTML="<br><input type=\"submit\" name=\"su\" value=\"Add Module\">";
+			 
+			
+			
+			}
+		</script>
+	</HEAD>
+
+	<BODY>
+		Enter module name:<br />
+		<br />
+		<input type="text" name="module">
+		<br />
+		<br />
+		<br />
+		Enter number of levels: <br />
+		<br />
+		<input id="num" type="text" name="number">	
+		<br />
+		<br />
+		<br />
+		<input id="fet" type="submit" name="fetch" value="fetch" onMouseOver="gt()">
+		<br />
+		<br />
+		<br />
+		<div id="level">
+		</div>
+		<div id="sub">
+		</div>
+	</BODY>
+
+</HTML>

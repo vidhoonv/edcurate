@@ -1,0 +1,59 @@
+<?
+	session_start();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>edit template-2</title>
+	<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
+	<script type="text/javascript">
+			function up()
+			{
+				document.f1.action="upload.php";  //may need changes
+				document.f1.submit();
+				
+			}
+			function sk()
+			{
+				document.f1.action="scripts/t2_slave2.php";   //this probably doesnt need changes
+				document.f1.submit();
+			}
+	</script>
+</head>
+
+<body>
+		<table border="3" bordercolor="black">
+			<tr height="500">
+				<td valign="top" width="800">provide information here:<br>
+				The slide contains the following elements:
+				<ul>
+					<li>title text</li>
+					<li>picture -- needs content upload</li>
+					<li>outline text</li>
+				</ul>
+				<form name="f1"  method="post" action="" enctype="multipart/form-data">
+				Step 1: Choose the picture to upload -> 
+				<ul>
+					
+					<li>picture source<br />
+						<input type="file" name="pic_source" /> <br />
+						<br />	
+						<input type="submit" name="pic_upload" value="upload" onClick="up()">
+						<input type="submit" name="skip" value="select from already available pictures" onClick="sk()">
+					</li>
+					<br />
+				
+				</ul>
+				
+				
+					
+				</form>	
+
+				</td>
+					
+				
+			</tr>
+		<table>
+</body>
+</html>

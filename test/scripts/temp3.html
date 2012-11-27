@@ -1,0 +1,49 @@
+
+<html>
+<head><title>Design Slide</title>
+
+ <script type="text/javascript" src="fckeditor/fckeditor.js"></script>
+<script type="text/javascript">
+
+var auto_play=1;
+
+
+
+function creates()
+{
+	f1cpy=document.getElementById("temp3");
+			f1cpy.action="upload.php";
+			f1cpy.submit();
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+
+<form name="temp3" id="temp3" target="_blank" method="get" action="upload.php"  enctype="multipart/form-data" >
+
+
+
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<br /><br /><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<textarea rows="15" id="vid_cont" name="vid_cont" cols="15" readonly="readonly">Use the Browse button to upload the Video.</textarea>&nbsp;&nbsp;
+<input type="file" id="pic_source" name="pic_source" style="border:thin;border-style:dotted;"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+<input type="submit" value="Create" onclick="creates()"/>
+
+
+</form>
+</body>
+</html>

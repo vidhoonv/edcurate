@@ -1,0 +1,91 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			Custom Presentation Application
+		</TITLE>
+
+		<SCRIPT type="text/javascript">
+			function cr()
+			{
+				//document.write("preview");
+				f1cpy=document.getElementById("f1");
+				
+				f1cpy.action="scripts/createp.php";  //may need changes
+				f1cpy.submit();    
+				//return true;
+			}
+			
+			function op()
+			{
+				//document.write("create");
+
+				f1cpy=document.getElementById("f1");
+
+				f1cpy.action="scripts/choose.php";  //may need changes
+				f1cpy.submit();
+				//return true;    
+			}
+			function am()
+			{
+				f1cpy=document.getElementById("f1");
+
+				f1cpy.action="http://localhost/test/modules/define_module.html";  //may need changes
+				f1cpy.submit();
+			}
+			function dm()
+			{
+				f1cpy=document.getElementById("f1");
+
+				f1cpy.action="http://localhost/test/modules/scripts/delete_module.php";  //may need changes
+				f1cpy.submit();
+			}
+			function bu()
+			{
+				
+				var f=document.getElementById("f1");
+
+				f.action="scripts/quit.php";  //may need changes
+				f.submit();	
+			}
+			function dc()
+			{
+				var f=document.getElementById("f1");
+
+				f.action="modules/define_course.html";  //may need changes
+				f.submit();		
+			}
+		</SCRIPT>
+		<link rel="stylesheet" href="styles/s1.css">
+	</HEAD>
+
+	<BODY>
+		<div class="header">Custom Presentation Application</div>
+		<br />
+		<br />
+		<br />
+		<div class="nav" align="center" >
+		Choose an option:
+		<br />
+		<br />
+		<form id="f1" action="" method="post">
+		<input type="submit" name="create" value="Create New Presentation" onClick="cr()">
+		<br /> <br />
+		<input type="submit" name="open" value="Open Existing Presentation" onClick="op()">  
+		<br />
+		<br /> <br />
+		<input type="submit" name="addm" value="Add module" onClick="am()">  
+		<br />
+		<br /> <br />
+		<input type="submit" name="delm" value="Delete module" onClick="dm()">  
+		<br />
+		<br /> <br />
+		<input type="submit" name="dcourse" value="Define Course" onClick="dc()">  
+		<br />
+		<br /> <br />
+		<input type="submit" name="qt" value="Quit Session" onClick="bu()">  		
+
+		</form>
+		</div>		
+	</BODY>
+
+</HTML>

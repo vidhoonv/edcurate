@@ -1,0 +1,79 @@
+<?php
+session_start();
+echo $_SESSION['utype']; 
+//$_SESSION['utype']
+//$_SESSION['utype']="student";
+
+$_SESSION['pre']="stud_opt";
+
+$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+	if (!$con)
+	  {
+	  die('Could not connect: ' . mysql_error());
+	  }
+
+	mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+	
+	$query="UPDATE courses SET completed=0 where cname='".$_SESSION['cname']."'";
+	mysql_query($query,$con); 
+?>
+<HTML>
+	<HEAD>
+		<TITLE>
+			student - options
+		</TITLE>
+		<link rel="stylesheet" href="styles/s1.css">
+		<script type="text/javascript">
+
+		
+		function lk1()
+		{
+			var f=document.getElementById('stud');
+			f.action="http://localhost/test/scripts/sopt.php";
+			f.submit();
+		}
+
+		function lk2()
+		{
+			var f=document.getElementById('stud');
+			f.action="http://localhost/test/scripts/quit.php";
+			f.submit();
+		}
+		
+		</script>
+	</HEAD>
+
+	<BODY>
+		<div class="header">Want to learn?</div>
+
+		<form id="stud" action="" method="post">
+		<div class="subtitle">		1.Choose a course to learn:</div>
+		<br />
+		<br />
+		<select name="cname" onChange="ajaxFunction(this.value)">
+		<option>List of courses</option>
+		<option>---------------</option>
+<?
+			$query="SELECT distinct cname FROM courses";
+			$result=mysql_query($query,$con);
+
+		while($row=mysql_fetch_array($result))
+		{
+?>
+		<option><?echo $row['cname']?></option>	
+<?
+		}		
+?>		</select>
+		<br/>
+		<br/>
+
+		<input type="submit" name="s" value="Go ->" onClick="lk1()">
+		<br />
+		<br />
+		<input type="submit" name="ss" value="<- Quit Session" onClick="lk2()">
+		
+		
+		</form>
+	</BODY>
+
+</HTML>

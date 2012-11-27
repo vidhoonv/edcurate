@@ -1,0 +1,6 @@
+<?php
+
+//redirecting to the next page-
+header("Location:http://localhost/test /lot.php");
+
+?>

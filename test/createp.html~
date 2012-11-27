@@ -1,0 +1,20 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+				Create presentation
+		</TITLE>
+	</HEAD>
+
+	<BODY>
+		<form action=" ">
+		Enter presentation name:<br />
+
+		<input type="text" name="pname" value="">
+		<br />
+		<br />
+
+		<input type="submit" name="createp" value="Create">
+		</form>
+	</BODY>
+
+</HTML>

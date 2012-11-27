@@ -1,0 +1,59 @@
+<?php
+session_start();
+
+
+$_SESSION['pre']="endofss";
+$link='';
+if($_SESSION['utype']=="author")
+{
+	$link="div1()";
+	
+}
+else if($_SESSION['utype']=="student")
+{
+	$link="div2()";
+}
+echo $link."<br />".$_SESSION['utype'];
+
+unset($_SESSION['previous']);
+?>
+<HTML>
+	<HEAD>
+		<TITLE>
+		end of slideshow
+		</TITLE>
+		
+		<script type="text/javascript">
+			
+		 function div1()
+		{
+			var f=document.getElementById("f1");
+			f.action="options.php";
+			f.submit();
+		}	
+
+		 function div2()
+		{
+			var f=document.getElementById("f1");
+			f.action="sopt.php";
+			f.submit();
+		}	
+		
+		
+		</script>
+		<link rel="stylesheet" href="styles/s1.css">
+	</HEAD>
+
+	<BODY>
+		Slide show has ended!!<br />
+		<br/>
+		Click the button below for other options:<br /><br />
+		<form id="f1" action="">
+		<input type="submit" name="option" value="Main menu" onClick="<?echo $link?>">		
+		<br />
+		<br />
+		
+		</form>
+	</BODY>
+
+</HTML>

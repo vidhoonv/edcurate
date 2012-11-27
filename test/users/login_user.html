@@ -1,0 +1,54 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+				User login page
+		</TITLE>
+	<script type="text/javascript">
+			function ca()
+			{
+				//document.write("preview");
+				f1cpy=document.getElementById("user");
+				
+				f1cpy.action="create_user.html";  //may need changes
+				f1cpy.submit();    
+				//return true;
+			}
+			
+			function lo()
+			{
+				//document.write("create");
+
+				f1cpy=document.getElementById("user");
+
+				f1cpy.action="scripts/login_user.php";  //may need changes
+				f1cpy.submit();
+				//return true;    
+			}
+	</script>
+	<link rel="stylesheet" href="scripts/styles/s1.css">
+		</HEAD>
+
+	<BODY>
+
+		<div class="header"> Log IN</div><br/><br/>
+		<form id="user" action="" method="post">
+
+<div class="nav">	Enter username:<input type="text" name="uname"><br/><br/>
+		
+		Enter password:<input type="password" name="pword"><br/><br/>
+
+		Choose account type:<br/>
+		<input type="radio" name="rb" value="author">author&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="rb" value="student">student</br>
+		<br/>
+		<br/>
+		<input type="submit" name="s" value="Login" onClick="lo()">
+
+		<br/><br/>
+		
+		<input type="submit" name="k" value="Create" onClick="ca()">
+
+</div>
+		</form>
+	</BODY>
+
+</HTML>

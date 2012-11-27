@@ -1,0 +1,46 @@
+<?php
+session_start();
+if ($_FILES["file"]["error"] > 0)
+    {
+    echo "Return Code: " . $_FILES["pic_source"]["error"] . "<br />";
+    }
+  else
+    {
+  echo "Upload: " . $_FILES["pic_source"]["name"] . "<br />";
+    echo "Type: " . $_FILES["pic_source"]["type"] . "<br />";
+    echo "Size: " . ($_FILES["pic_source"]["size"] / 1024) . " Kb<br />";
+    echo "Temp file: " . $_FILES["pic_source"]["tmp_name"] . "<br />";
+ 
+    if (file_exists("pics/" . $_FILES["pic_source"]["name"]))
+      {
+      echo "A file with name ".$_FILES["pic_source"]["name"] . " already exists! Please go back and upload a file with different name!";
+      }
+
+    else
+      {
+      move_uploaded_file($_FILES["pic_source"]["tmp_name"],"pics/" . $_FILES["pic_source"]["name"]);
+	
+//	echo "Stored in: " . "pics/" . $_FILES["pic_source"]["name"];
+//	echo "UPLOAD SUCCESSFUL".$_POST['pic_source'];
+
+	
+	$name=$_FILES["pic_source"]["name"];
+	$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+	$n=$_SESSION['pname'];
+//	echo $_SESSION['pname'];
+	if (!$con)
+	  {
+	  die('Could not connect: ' . mysql_error());
+	  }
+
+	mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+	$row=mysql_query("insert into uploads(fname,pname) values('$name','$n')");     
+
+	mysql_close($con);
+	header("Location:http://localhost/test/scripts/t2_slave.php");
+
+	 }
+	
+		
+    }
+?>

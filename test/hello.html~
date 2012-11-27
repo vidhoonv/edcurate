@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>FCKeditor - Sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="noindex, nofollow">
+<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
+</head>
+<body>
+<form action="scripts/preview.php" method="post">
+<script type="text/javascript">
+var oFCKeditor = new FCKeditor('FCKeditor1');
+oFCKeditor.BasePath = "fckeditor/";
+oFCKeditor.Create();
+
+</script>
+<br>
+<br>
+<script type="text/javascript">
+var oFCKeditor = new FCKeditor('FCKeditor1');
+oFCKeditor.BasePath = "fckeditor/";
+oFCKeditor.Create();
+
+</script>
+<br>
+<br>
+
+<input type="submit" value="preview" name="preview">
+<br>
+<br>
+</form>
+</body>
+</html>
+

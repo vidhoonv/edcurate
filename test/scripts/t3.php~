@@ -1,0 +1,142 @@
+<?php
+session_start();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>edit template 3</title>
+<script type="text/javascript" src="fckeditor/fckeditor.js"></script>
+<script type="text/javascript">
+
+		function la() //to generate number of label elements dynamically acc to the number entered by user
+			{
+				element_label_cpy=document.getElementById("element_label");
+				decision_number_cpy=document.getElementById("d_n");
+				fetch_cpy=document.getElementById("fetch");
+				for(i=1;i<=decision_number_cpy.value;i++)
+				{
+				element_label_cpy.innerHTML+="<br>"+"<input type=\"text\" name=\"t"+i+"\" value=\"t"+i+"\">"+"<br>";
+				}
+				fetch_cpy.disabled=true;
+			
+			}
+		function pview()
+			{
+				f1_cpy=document.getElementById("f1");
+				//document.write("preview");
+				f1_cpy.action="preview3.php";  //may need changes
+				f1_cpy.submit();    
+				//return true;
+			}
+			
+		function cr()
+			{
+				//document.write("create");
+				f1_cpy=document.getElementById("f1");
+				f1_cpy.action="create3.php";  //may need changes
+				f1_cpy.submit();
+				//return true;    
+			}
+</script>
+</head>
+
+<body>
+
+				<p>provide information here:</p>
+				 
+				   <br>
+				 The slide contains the following elements: </p>
+				  <ul>
+					<li>title text</li>
+					<li>outline text</li>
+				</ul>
+				<form id="f1" target="_blank" method="post" action="">
+				Enter the slide name:<br>
+				<input type="text" name="slide_name" value="">
+				<br>
+				<br>
+				Select a learning level:<br />
+				<select name="ll">
+<?
+				//database part starts
+		$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+
+		if (!$con)
+		  {
+		  die('Could not connect: ' . mysql_error());
+		  }
+		mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+
+		$qery="SELECT lname from levels where mname='".$_SESSION['mname']."' order by lno";
+	
+		$result=mysql_query($qery,$con);
+
+		while($row=mysql_fetch_array($result))
+		{
+?>
+					<option><?echo $row['lname']?></option>
+<?
+		}
+		mysql_close($con);
+?>
+				</select>
+				<br />
+				<br />
+				Please provide the content for these elements here:
+				<ul>
+				Formatting options:<br><br>
+				<div id="tspot" ></div><br><br><br>
+				<li>title section<br>
+						Enter the text here:<br>
+						<script type="text/javascript">
+						var oFCKeditor = new FCKeditor('FCKeditor1');
+						oFCKeditor.BasePath = "fckeditor/";oFCKeditor.Width = 800;	
+						oFCKeditor.Height = 100;
+						oFCKeditor.Config[ 'ToolbarLocation' ] = 'Out:tspot' ;						
+						oFCKeditor.Create();
+						</script>	
+				</li>
+					<br>
+					<li>outline section<br>
+					Enter the text here:<br>
+					<script type="text/javascript">
+						var oFCKeditor = new FCKeditor('FCKeditor2');
+						oFCKeditor.BasePath = "fckeditor/";
+						oFCKeditor.Height = 300;	
+						oFCKeditor.Width = 800;	
+						oFCKeditor.Config[ 'ToolbarLocation' ] = 'Out:tspot' ;						
+						oFCKeditor.Create();
+						</script>
+					<br>
+					<br /><br />
+				
+					Choose the decision element:<br />
+					<select name="decision_name">
+						<option value="radio button">radio button</option>
+						<option value="check box">check box</option>
+					</select>
+					<br>
+					Enter the number of decision elements needed in the slide:<br/>
+					<input id="d_n" type="text" name="decision_number" value="1" width="20">
+					<br />
+					<input id="fetch" type="submit" name="fetch" value="fetch" onMouseOver="la()" >
+					
+					<br />
+					<br />
+					Enter the label for the decision elements in order:
+					<br />
+					<div id="element_label" >
+					<!label section>
+					</div> 
+					<br>
+					</li>
+				</ul>
+					<input type="submit" name="preview" value="preview"     onClick="pview()">
+
+				&nbsp&nbsp<input type="submit" name="create" value="create slide"  onClick="cr()">
+					
+				</form>	
+				
+</body>
+</html>

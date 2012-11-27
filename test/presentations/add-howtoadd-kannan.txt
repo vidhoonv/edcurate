@@ -1,0 +1,12 @@
+single digit without carry
+- to -
+single digit without carry
+- to -
+single digit with carry
+- to -
+single digit with carry
+- to -
+double digit without carry
+- to -
+double digit without carry
+- to -

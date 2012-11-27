@@ -1,0 +1,38 @@
+<?php
+session_start();
+
+$fname=$_SESSION['mname']."-".$_SESSION['pname']-$_SESSION['uname'];
+
+$fname="/opt/lampp/htdocs/test/presentations/".$_SESSION['pname']."/".$fname.".txt"; 
+
+//creating and opening the file
+	
+if(fopen($fname,'w'))
+{
+unlink($fname);
+}
+$fhandle=fopen($fname,'w') or die("cannot open file");
+
+
+		$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+		if (!$con)
+		  {
+		  die('Could not connect: ' . mysql_error());
+		  }
+		mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error());
+
+		$query="SELECT ".$_SESSION['pname'].".lname FROM ".$_SESSION['pname']." inner join levels where ".$_SESSION['pname'].".lname=levels.lname and cd=1";
+		$result=mysql_query($query,$con);
+
+		while($row=mysql_fetch_array($result))
+		{
+			$content.=$row['lname']." to ";
+		}
+
+		echo $content;
+
+		//writing and closing the file
+				fwrite($fhandle,$content);
+				fclose($fhandle);
+			
+?>

@@ -1,0 +1,88 @@
+<?php
+session_start();
+echo $_SESSION['pname'];
+?>
+<HTML>
+	<HEAD>
+		<TITLE> linking by levels 
+		</TITLE>
+		
+		<script type="text/javascript">
+			function ab()
+			{
+				var f=document.getElementById("f1");
+				f.action="loadlink.php";
+				f.submit();
+			}
+
+			function fn()
+			{
+				var f=document.getElementById("f1");
+				f.action="complete.php";
+				f.submit();
+			}
+		</script>
+	</HEAD>
+
+	<BODY>
+			<form id="f1" action="" method="post" >
+			
+<?
+		$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+		if (!$con)
+		  {
+		  die('Could not connect: ' . mysql_error());
+		  }
+		mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+
+	
+			$query2="SELECT distinct lname FROM ".$_SESSION['pname']." where linked=0";
+			
+					
+		$result2=mysql_query($query2,$con);  
+		
+		$c=mysql_num_rows($result);
+
+		if($c==0)
+		{
+			
+		}
+		else
+		{	
+?>
+		Choose a level:
+			<select name="level"> 
+				<option>options:</option>
+				<option>--------</option>
+<?
+		while($row2=mysql_fetch_array($result2))
+		{
+?>
+		<option><?echo $row2['lname']?></option>
+<?
+		}
+
+?>
+			</select>
+			<br />
+			<br />
+			<input type="submit" name="go" value="go" onClick="ab()">
+			<br/>
+			<br />
+<?
+		}
+?>
+
+			
+		
+			
+			<input type="submit" name="fin" value="Finish Linking" onClick="fn()">
+		
+			</form>
+
+
+			<hr>
+
+	</BODY>
+
+</HTML>

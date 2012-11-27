@@ -1,0 +1,98 @@
+<?php
+ session_start();
+
+	//forming the nameof file	
+	$fname=$_POST["slide_name"];
+	$fname="/opt/lampp/htdocs/test/presentations/".$_SESSION['pname']."/".$fname.".php";  //may need changes
+	$de="";
+
+	//creating and opening the file
+	
+	$fhandle=fopen($fname,'w') or die("cannot open file");
+
+	//creating the content in variables to write into file
+
+	$php_part="<?php\n\nsession_start();\n\n?>";
+
+	$style_part="<style type=\"text/css\">\nbody {\nbackground-color: #FFFFCC;\nfont-family: Arial, Helvetica, sans-serif;\nfont-size: 12px;\n	line-height: 24px;\ncolor: #333333;\n}\n.title {\nfont-family: Georgia, \"Times New Roman\", Times, serif;\nfont-size: 18px;\n	line-height: 30px; color: #000000;\n	border-color: #CCCCCC #333333 #333333 #CCCCCC;\nborder-width: 2px;\n  border-style: dotted;\ntext-align:center;\nfont-weight:bold;\n}\n.subtitle {\nfont-family: Georgia, \"Times New Roman\", Times, serif;\nfont-size: 16px;\nline-height: 20px;\nfont-weight: bold;\n color: #660000;\nfont-style: oblique;\nborder-width: 2px;\nborder-color: #CCCCCC #333333 #333333 #CCCCCC; \nborder-style: dotted;\n}\n.header {\nfont-family: Georgia,\"Times New Roman\", Times, serif;font-size: 24px;background-color: #990000;\n  color: #FFFF66;\n} \n</style>";
+
+	$head_part="<html>\n<head>\n<title>".$_POST["slide_name"]."\n</title>".$style_part."\n</head>";
+
+	//title content part
+	$t_part="\n<div class=\"header\"  >\n<span id=\"title_content\">".$_POST["FCKeditor1"]."\n</span>\n</div>\n<br />";
+
+
+	//outline content part
+	$o_part="\n<span >".$_POST['FCKeditor2']."\n</span>";
+
+	//decision content part
+	$d_part="\n<span >\n";
+
+	if($_POST['decision_name']=="radio button")
+	{
+		$de=1;
+		for ($i=1; $i<=$_POST['decision_number']; $i++)
+  		{
+			
+			$j="t".$i;
+			$d_part.="\n<br />\n<input type=\"radio\" name=\"rb\" value=\"".$i."\">".$_POST["$j"]."\n<br />\n";
+		}	
+	}
+	else if($_POST['decision_name']=="check box")
+	{
+		$de=2;
+		for ($i=1; $i<=$_POST['decision_number']; $i++)
+  		{
+			$j="t".$i;	
+			$d_part.="\n<br />\n<input type=\"checkbox\" name=\"cb\" value=\"".$i."\">".$_POST["$j"]."\n<br />\n";  			
+		}
+	}	 
+		
+	$d_part.="\n</span>";
+
+	$next_part="<input type=\"submit\" name=\"next_slide\" value=\"Next\">";
+		//the path specified in form will need changes
+	$body_part="\n<body>\n<form id=\"f1\" action=\"scripts/".$_POST['slide_name'].".php\" method=\"post\">\n".$t_part."<div class=\"subtitle\">\n ".$o_part."\n".$d_part."\n</div>\n".$next_part."\n</form>\n</body>\n</html>";
+
+
+	fwrite($fhandle,$php_part);
+	fwrite($fhandle,$head_part);
+	fwrite($fhandle,$body_part);
+
+
+	fclose($fhandle);
+	
+
+//database part starts
+		$con = mysql_connect("localhost:3306","vidhoon"and "123456");
+		$sn=$_POST['slide_name'];
+		$nd=$_POST['decision_number'];
+		$mn=$_POST['ll'];
+		if (!$con)
+		  {
+		  die('Could not connect: ' . mysql_error());
+		  }
+		mysql_select_db("cpa", $con) or die ('Could not connect: ' . mysql_error()); 
+		$query="INSERT INTO ".$_SESSION['pname']." VALUES('$sn',1,'$de','$nd',0,'$mn',' ')";
+		$row=mysql_query($query,$con);  
+
+		mysql_close($con);
+//db part ends	
+	
+unset($_SESSION['previous']);
+
+?>
+<HTML>
+<HEAD>
+<TITLE>
+	Success
+</TITLE>
+<link rel="stylesheet" href="styles/s1.css">
+</HEAD>
+<BODY>
+		The slide was successfully created under the presentation : <?echo $_SESSION['pname']?><br /><br />
+		<form id="f1" action="http://localhost/test/scripts/options.php" method="post">
+		<input type="submit" name="ok" value="ok">		
+		</form>
+</BODY>
+</HTML>		

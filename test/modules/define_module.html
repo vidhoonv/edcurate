@@ -1,0 +1,64 @@
+<HTML>
+	<HEAD>
+		<TITLE>
+			define modules
+		</TITLE>
+		<link rel="stylesheet" href="/opt/lampp/htdocs/test/styles/s1.css">
+		<script type="text/javascript">
+
+			function gt()
+			{
+			//document.write("hello");
+			
+			var l=document.getElementById("level");
+			var m=document.getElementById("num");
+			var n=m.value;
+			//document.write(n);
+			for(i=1;i<=n;i++)
+			{
+			l.innerHTML+="<br>Enter name of Level-"+i+"<br><input type=\"text\" name=\"t"+i+"\"><br>"; 
+			}
+
+			var f=document.getElementById("fet");
+
+			f.style.visibility="hidden";
+
+			var s=document.getElementById("sub");
+
+			s.innerHTML="<br><input type=\"submit\" name=\"su\" value=\"Add Module\">";
+			 
+			
+			
+			}
+		</script>
+		
+		<link rel="stylesheet" href="scripts/styles/s1.css">
+	</HEAD>
+
+	<BODY>
+		<form id="f1" action="http://localhost/test/modules/scripts/define_module.php" method="post">
+		<div class="nav">Enter module name:</div><br />
+		<br />
+		<input type="text" name="module">
+		<br />
+		<br />
+		<br />
+		<div class="nav">Enter number of levels:</div> <br />
+		<br />
+		<input id="num" type="text" name="number">	
+		<br />
+		<br />
+		<br />
+		<input id="fet" type="submit" name="fetch" value="fetch" onMouseOver="gt()">
+		<br />
+		<br />
+		<br />
+		<div id="level">
+		</div>
+		<div id="sub">
+		</div>
+
+		</form>
+	</BODY>
+
+</HTML>
